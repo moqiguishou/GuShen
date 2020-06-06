@@ -1,1 +1,3 @@
 *.cache
+#*.ide-shm
+#/GuShen2
