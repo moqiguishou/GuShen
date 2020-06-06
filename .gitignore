@@ -1,3 +1,4 @@
 *.cache
 #*.ide-shm
 /GuShen2/.vs
+/GuShen2/GuShen/obj
