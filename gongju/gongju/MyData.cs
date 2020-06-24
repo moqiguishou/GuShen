@@ -5,19 +5,72 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GuShen {
+namespace gongju {
     class MyData {
         public string Name;
+        public string FullName;
         public string[] ZiDuans;
+        public string PreFour;
         //public Dictionary<string, string> Data = new Dictionary<string, string>();
-        public Dictionary<int, Dictionary<string,string>> AllData = new Dictionary<int, Dictionary<string, string>>();
+        public Dictionary<int, Dictionary<string, string>> AllData = new Dictionary<int, Dictionary<string, string>>();
         public MyData(string Name) {
             this.Name = Name;
-            string sPrePath = @"../../../data/";
+            string sPrePath = MyIni.ReadIniData("Path","DataInfoOffice","");
+            //string sPrePath = @"../../../data/";
             string Path = sPrePath + Name + ".csv";
-            RedFile(Path);
+            FullName = Path;
+            //RedFile(Path);
+            RedFilePreFour(Path);
             //FileInfo fi = new FileInfo(Path);
         }
+        private void RedFilePreFour(string FullName) {
+            FileStream fs = new FileStream(FullName, FileMode.Open);
+            StreamReader sr = new StreamReader(fs);
+            string str = "";
+            str = sr.ReadLine();
+            PreFour = PreFour + str+ "\n";
+            str = sr.ReadLine();
+            PreFour = PreFour + str + "\n";
+            str = sr.ReadLine();
+            PreFour = PreFour + str + "\n";
+            ZiDuans = str.Split(',');//第3行搜集字段
+            str = sr.ReadLine();
+            PreFour = PreFour+ str;
+            //第五行充当默认数值
+            str = sr.ReadLine();
+            string[] valves = GetValves(str);
+            Dictionary<string, string> Data = new Dictionary<string, string>();
+            for (int i = 0; i < ZiDuans.Length; i++) {
+                Data.Add(ZiDuans[i], valves[i]);
+            }
+            AllData.Add(0, Data);
+            sr.Close();
+            fs.Close();
+        }
+
+        private string[] GetValves(string str) {
+            bool b = false;
+            string s = "";
+            foreach (char a in str) {
+                if (b && a.Equals(",")) {
+                    s = s + "@";
+                } else {
+                    s = s + a;
+                }
+                if (a.Equals("\"") && !b) {
+                    b = true;
+                }
+                if (a.Equals("\"") && b) {
+                    b = false;
+                }
+            }
+            string[] values = s.Split(',');
+            for (int i = 0; i < values.Length; i++) {
+                values[i] = values[i].Replace("@", ",");
+            }
+            return values;
+        }
+
 
         private void RedFile(string FullName) {
             //FileInfo fi = new FileInfo(FullName);
@@ -59,8 +112,8 @@ namespace GuShen {
             return false;
         }
 
-        public string GetValve(string ziduan,string key,string outZiduan) {
-            if (AllData.Count == 0|| !AllData[1].ContainsKey(ziduan) || !AllData[1].ContainsKey(outZiduan)) {
+        public string GetValve(string ziduan, string key, string outZiduan) {
+            if (AllData.Count == 0 || !AllData[1].ContainsKey(ziduan) || !AllData[1].ContainsKey(outZiduan)) {
                 return "";
             }
 
@@ -85,11 +138,11 @@ namespace GuShen {
         }
 
         public bool isHave(string ziduan, string v) {
-
+            return false;
         }
 
         private bool isZiDuan(string ziduan) {
-            if (AllData.Count == 0 || !AllData[1].ContainsKey(ziduan) ) {
+            if (AllData.Count == 0 || !AllData[1].ContainsKey(ziduan)) {
                 return false;
             }
             if (AllData[1].ContainsKey(ziduan)) {
@@ -100,7 +153,7 @@ namespace GuShen {
 
         public void test() {
             string str = "";
-            str = str+ "name:" + Name + "\n";
+            str = str + "name:" + Name + "\n";
             str = str + "ZiDuan:" + " ";
             foreach (string s in ZiDuans) {
                 str = str + s + " ";

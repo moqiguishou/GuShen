@@ -1,0 +1,10 @@
+D:\桌面\回家\gongju\gongju\bin\Debug\gongju.exe
+D:\桌面\回家\gongju\gongju\bin\Debug\gongju.pdb
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.csprojAssemblyReference.cache
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.Form1.resources
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.Properties.Resources.resources
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.csproj.GenerateResource.cache
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.csproj.CoreCompileInputs.cache
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.exe
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.pdb
+D:\桌面\回家\gongju\gongju\obj\Debug\gongju.Form_Task.resources
